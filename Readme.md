@@ -31,3 +31,13 @@ load()
     App.start();
   })
 ```
+
+### Conditional loading
+
+``` js
+load()
+  .js(window.JSON || 'json2.js',
+      function() { return window.JSON; })
+  .js(oldie ? 'jquery-1.9.js' : 'jquery-2.1.js',
+      function() { return window.jQuery; })
+```

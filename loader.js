@@ -17,6 +17,8 @@
     this.checks = {};
     this.callbacks = {};
     this.completed = 0;
+    this.last = null;
+    this.onprogress = [];
     return this;
   };
 
@@ -26,10 +28,8 @@
      * registers an asset to preload
      */
 
-    asset: function (uri) {
-      if (!uri) return this;
-      this.load.push('preload!'+uri);
-      return this;
+    asset: function (uri, fn) {
+      return this.add(uri, fn, { prefix: 'preload!' });
     },
 
     /**
@@ -39,10 +39,7 @@
      */
 
     js: function (uri, fn) {
-      if (!uri) return this;
-      this.load.push(uri);
-      if (fn) this.checks[uri] = fn;
-      return this;
+      return this.add(uri, fn);
     },
 
     /**
@@ -50,9 +47,20 @@
      * loads a CSS file from `uri`.
      */
 
-    css: function (uri) {
+    css: function (uri, fn) {
+      return this.add(uri, fn, { prefix: 'css!' });
+    },
+
+    /**
+     * add: (internal)
+     */
+
+    add: function (uri, fn, options) {
       if (!uri) return this;
-      this.load.push('css!'+uri);
+      if (options && options.prefix) uri = options.prefix + uri;
+      this.load.push(uri);
+      if (fn) this.checks[uri] = fn;
+      this.last = uri;
       return this;
     },
 
@@ -62,11 +70,9 @@
      */
 
     then: function (fn) {
-      if (!this.load.length)
-        throw new Error("then(): nothing to attach to");
-
-      var last = this.load[this.load.length-1];
-      this.callbacks[last] = fn;
+      if (!this.last) return this;
+      if (!this.callbacks[this.last]) this.callbacks[this.last] = [];
+      this.callbacks[this.last].push(fn);
       return this;
     },
 
@@ -76,7 +82,8 @@
      */
 
     progress: function (fn) {
-      this.onprogress = fn;
+      this.onprogress.push(fn);
+      return this;
     },
 
     /**
@@ -85,7 +92,13 @@
      */
 
     run: function (yn) {
+      var self = this;
       yepnope = yn || getYepnope();
+      yepnope({
+        load: this.load,
+        callback: function (uri) { self.process(uri); }
+      });
+
       return this;
     },
 
@@ -108,17 +121,18 @@
 
       // trigger the `then` callback
       var cb = this.callbacks[fname];
-      if (cb) cb();
+      if (cb) fire(cb);
 
       return this;
     },
 
     /** triggerProgress: (internal) */
     triggerProgress: function (fname, loaded) {
-      if (this.onprogress) return;
-      this.onprogress({
-        filename: fname,
+      if (!this.onprogress) return;
+      fire(this.onprogress, {
+        uri: fname,
         completed: this.completed,
+        total: this.load.length,
         percent: this.completed / this.load.length,
         loaded: loaded
       });
@@ -133,9 +147,7 @@
       // 'recursive yepnope'
       yepnope({
         load: [fname],
-        callback: function (lol, wat, fname) {
-          self.process(fname);
-        }
+        callback: function (uri) { self.process(uri); }
       });
 
       return self;
@@ -150,6 +162,20 @@
     var yn = window.yepnope || (window.Modernizr && window.Modernizr.load);
     if (!yn) throw new Error("No yepnope");
     return yn;
+  }
+
+  /**
+   * fires callbacks
+   */
+
+  function fire (list) {
+    if (!Array.isArray(list)) list = [list];
+    var args = [].slice.call(arguments, 1);
+
+    for (var i = 0, len = list.length; i < len; i++) {
+      var item = list[i];
+      item.apply(window, args || []);
+    }
   }
 
   if (typeof module === 'object')

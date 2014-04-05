@@ -1,0 +1,1 @@
+window.lol = 100;

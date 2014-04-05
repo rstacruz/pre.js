@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title></title>
+  <script src="loader.js"></script>
+  <script>
+    load()
+      .css('style.css')
+      .js('jquery.js', function() { return window.jQuery; })
+      .then(function() {
+        console.log('jquery loaded');
+      })
+      .js('lol.js', function() { return window.lol; })
+      .then(function() {
+        console.log('lol loaded');
+      })
+      .progress(function(e) {
+        if (e.loaded) {
+          console.log('loaded %s (%s/%s, %s%%)', e.uri, e.completed, e.total, e.percent * 100);
+        } else {
+          console.log('failed to load %s, retrying (%s/%s, %s%%)', e.uri, e.completed, e.total, e.percent * 100);
+        }
+      })
+      .run();
+  </script>
+</head>
+<body>
+  hello!
+</body>
+</html>

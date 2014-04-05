@@ -4,11 +4,10 @@ load = null
 beforeEach -> global.sinon = require('sinon').sandbox.create()
 afterEach  -> global.sinon.restore()
 
-# rebuild
-# before (done) ->
-#   spawn = require('child_process').spawn
-#   proc = spawn('npm', ['run', 'prepublish'], { stdio: 'inherit' })
-#   proc.on 'exit', -> done()
+before (done) ->
+  spawn = require('child_process').spawn
+  proc = spawn('npm', ['run', 'prepublish'])
+  proc.on 'exit', -> done()
 
 # set up jsdom
 before require('./support/jsdom')
@@ -62,7 +61,7 @@ describe 'load', ->
       expect(ctx.callbacks['foo.js'].toString()).to.match /aoeu/
 
     it 'does nothing without any assets', ->
-      expect(=>
-        ctx = load()
-          .then(-> "aoeu")
-      ).to.throw /nothing to attach/
+      ctx = load()
+        .then(-> "aoeu")
+
+      expect(Object.keys(ctx.callbacks)).have.length 0
