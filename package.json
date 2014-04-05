@@ -1,0 +1,23 @@
+{
+  "name": "loader",
+  "version": "0.0.0",
+  "description": "resilient, efficient resource loader",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "~1.9.1",
+    "sinon": "~1.8.2"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1",
+    "coffee-script": "~1.7.1"
+  },
+  "scripts": {
+    "test": "mocha",
+    "prepublish": "make"
+  },
+  "author": "Rico Sta. Cruz <hi@ricostacruz.com>",
+  "license": "MIT"
+}
