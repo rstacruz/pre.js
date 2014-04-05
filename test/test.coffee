@@ -37,6 +37,12 @@ describe 'load', ->
     expect(ctx.load).have.length 1
     expect(ctx.load[0]).eq 'css!foo.css'
 
+  it '.asset', ->
+    ctx = load()
+      .asset('img.png')
+    expect(ctx.load).have.length 1
+    expect(ctx.load[0]).eq 'preload!img.png'
+
   describe '.js', ->
     it 'ok', ->
       ctx = load()
@@ -52,6 +58,17 @@ describe 'load', ->
 
       expect(ctx.load).have.length 0
 
+  describe '.progress', ->
+    it 'ok', ->
+      called = ""
+
+      ctx = load()
+        .progress(-> called += '1')
+        .progress(-> called += '2')
+
+      ctx.triggerProgress('jquery.js', true)
+      expect(called).to.eq "12"
+
   describe '.then', ->
     it 'adds a callback', ->
       ctx = load()
@@ -59,6 +76,15 @@ describe 'load', ->
         .then(-> "aoeu")
 
       expect(ctx.callbacks['foo.js'].toString()).to.match /aoeu/
+
+    it 'adds 2 callbacks', ->
+      ctx = load()
+        .js('foo.js', -> true)
+        .then(-> "aoeu")
+        .then(-> "htns")
+
+      expect(ctx.callbacks['foo.js'][0]).to.match /aoeu/
+      expect(ctx.callbacks['foo.js'][1]).to.match /htns/
 
     it 'does nothing without any assets', ->
       ctx = load()
