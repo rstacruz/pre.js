@@ -592,6 +592,7 @@ yepnope.addPrefix( 'preload', function ( resource ) {
     return resource;
   } );
 } )( this.yepnope );
+/** loader.js @license MIT */
 (function() {
   var yepnope;
 

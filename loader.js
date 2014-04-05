@@ -1,3 +1,4 @@
+/** loader.js @license MIT */
 (function() {
   var yepnope;
 
