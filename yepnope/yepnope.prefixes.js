@@ -18,4 +18,9 @@
     //carry on
     return resource;
   } );
+
+  yepnope.addPrefix( 'preload', function ( resource ) {
+    resource.noexec = true;
+    return resource;
+  });
 } )( this.yepnope );

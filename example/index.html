@@ -15,12 +15,11 @@
       .then(function() {
         console.log('lol loaded');
       })
-      .progress(function(e) {
-        if (e.loaded) {
-          console.log('loaded %s (%s/%s, %s%%)', e.uri, e.completed, e.total, e.percent * 100);
-        } else {
-          console.log('failed to load %s, retrying (%s/%s, %s%%)', e.uri, e.completed, e.total, e.percent * 100);
-        }
+      .on('progress',function(e) {
+        console.log('loaded %s (%s/%s, %s%%)', e.uri, e.completed, e.total, e.percent * 100);
+      })
+      .on('retry',function(e) {
+        console.log('failed to load %s, retrying', e.uri);
       })
       .run();
   </script>

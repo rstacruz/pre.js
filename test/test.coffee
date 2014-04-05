@@ -63,8 +63,8 @@ describe 'load', ->
       called = ""
 
       ctx = load()
-        .progress(-> called += '1')
-        .progress(-> called += '2')
+        .on('progress', -> called += '1')
+        .on('progress', -> called += '2')
 
       ctx.triggerProgress('jquery.js', true)
       expect(called).to.eq "12"

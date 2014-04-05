@@ -561,17 +561,6 @@ var docElement            = doc.documentElement,
 
 })( this, document );
 /**
- * yepnope.js preload prefix
- *
- * by Alex Sexton
- *
- * Use the prefix! modifier to cache content but not execute it
- */
-yepnope.addPrefix( 'preload', function ( resource ) {
-  resource.noexec = true;
-  return resource;
-});
-/**
  * Yepnope CSS Force prefix
  * 
  * Use a combination of any prefix, and they should work
@@ -591,9 +580,14 @@ yepnope.addPrefix( 'preload', function ( resource ) {
     //carry on
     return resource;
   } );
+
+  yepnope.addPrefix( 'preload', function ( resource ) {
+    resource.noexec = true;
+    return resource;
+  });
 } )( this.yepnope );
 /** loader.js @license MIT */
-(function() {
+(function(window) {
   var yepnope;
 
   /***
@@ -614,6 +608,7 @@ yepnope.addPrefix( 'preload', function ( resource ) {
     this.completed = 0;
     this.last = null;
     this.onprogress = [];
+    this.onretry = [];
     return this;
   };
 
@@ -672,12 +667,12 @@ yepnope.addPrefix( 'preload', function ( resource ) {
     },
 
     /**
-     * progress : progress(fn)
-     * registers a progress callback.
+     * on : on(event, fn)
+     * registers a callback. event can either be 'progress' or 'retry'.
      */
 
-    progress: function (fn) {
-      this.onprogress.push(fn);
+    on: function (event, fn) {
+      this['on'+event].push(fn);
       return this;
     },
 
@@ -707,12 +702,12 @@ yepnope.addPrefix( 'preload', function ( resource ) {
       var verify = this.checks[fname];
       if (verify) {
         var result = verify();
-        if (!result) return this.retry(fname);
+        if (!result) return this.retryResource(fname);
       }
 
       // trigger the progress
       this.completed++;
-      this.triggerProgress(fname, true);
+      this.triggerProgress(fname);
 
       // trigger the `then` callback
       var cb = this.callbacks[fname];
@@ -722,22 +717,25 @@ yepnope.addPrefix( 'preload', function ( resource ) {
     },
 
     /** triggerProgress: (internal) */
-    triggerProgress: function (fname, loaded) {
-      if (!this.onprogress) return;
+    triggerProgress: function (fname) {
       fire(this.onprogress, {
         uri: fname,
         completed: this.completed,
         total: this.load.length,
-        percent: this.completed / this.load.length,
-        loaded: loaded
+        percent: this.completed / this.load.length
       });
     },
 
-    /** retry: (internal) */
-    retry: function (fname) {
+    /** triggerRetry: (internal) */
+    triggerRetry: function (fname) {
+      fire(this.onretry, { uri: fname });
+    },
+
+    /** retryResource: (internal) */
+    retryResource: function (fname) {
       var self = this;
 
-      this.triggerProgress(fname, false);
+      this.triggerRetry(fname);
 
       // 'recursive yepnope'
       yepnope({
@@ -776,5 +774,5 @@ yepnope.addPrefix( 'preload', function ( resource ) {
   if (typeof module === 'object')
     module.exports = load;
   else
-    this.load = load;
-})();
+    window.load = load;
+})(this);

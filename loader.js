@@ -1,5 +1,5 @@
 /** loader.js @license MIT */
-(function() {
+(function(window) {
   var yepnope;
 
   /***
@@ -20,6 +20,7 @@
     this.completed = 0;
     this.last = null;
     this.onprogress = [];
+    this.onretry = [];
     return this;
   };
 
@@ -78,12 +79,12 @@
     },
 
     /**
-     * progress : progress(fn)
-     * registers a progress callback.
+     * on : on(event, fn)
+     * registers a callback. event can either be 'progress' or 'retry'.
      */
 
-    progress: function (fn) {
-      this.onprogress.push(fn);
+    on: function (event, fn) {
+      this['on'+event].push(fn);
       return this;
     },
 
@@ -113,12 +114,12 @@
       var verify = this.checks[fname];
       if (verify) {
         var result = verify();
-        if (!result) return this.retry(fname);
+        if (!result) return this.retryResource(fname);
       }
 
       // trigger the progress
       this.completed++;
-      this.triggerProgress(fname, true);
+      this.triggerProgress(fname);
 
       // trigger the `then` callback
       var cb = this.callbacks[fname];
@@ -128,22 +129,25 @@
     },
 
     /** triggerProgress: (internal) */
-    triggerProgress: function (fname, loaded) {
-      if (!this.onprogress) return;
+    triggerProgress: function (fname) {
       fire(this.onprogress, {
         uri: fname,
         completed: this.completed,
         total: this.load.length,
-        percent: this.completed / this.load.length,
-        loaded: loaded
+        percent: this.completed / this.load.length
       });
     },
 
-    /** retry: (internal) */
-    retry: function (fname) {
+    /** triggerRetry: (internal) */
+    triggerRetry: function (fname) {
+      fire(this.onretry, { uri: fname });
+    },
+
+    /** retryResource: (internal) */
+    retryResource: function (fname) {
       var self = this;
 
-      this.triggerProgress(fname, false);
+      this.triggerRetry(fname);
 
       // 'recursive yepnope'
       yepnope({
@@ -182,5 +186,5 @@
   if (typeof module === 'object')
     module.exports = load;
   else
-    this.load = load;
-})();
+    window.load = load;
+})(this);
