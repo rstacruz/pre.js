@@ -607,8 +607,11 @@ var docElement            = doc.documentElement,
     this.callbacks = {};
     this.completed = 0;
     this.last = null;
+    this.onfail = [];
     this.onprogress = [];
     this.onretry = [];
+    this.maxretries = 3;
+    this.retryCount = {};
     return this;
   };
 
@@ -655,6 +658,17 @@ var docElement            = doc.documentElement,
     },
 
     /**
+     * retries : retries(n)
+     * Sets the maximum number of retries to `n`.
+     */
+
+    retries: function (n) {
+      if (arguments.length === 0) return this.maxretries;
+      this.maxretries = n;
+      return this;
+    },
+
+    /**
      * then : then(fn)
      * registers a success callback function for the previous asset.
      */
@@ -672,6 +686,7 @@ var docElement            = doc.documentElement,
      */
 
     on: function (event, fn) {
+      if (!this['on'+event]) throw new Error("on(): unknown event '"+event+"'");
       this['on'+event].push(fn);
       return this;
     },
@@ -726,22 +741,31 @@ var docElement            = doc.documentElement,
       });
     },
 
-    /** triggerRetry: (internal) */
-    triggerRetry: function (fname) {
-      fire(this.onretry, { uri: fname });
+    /** trigger: (internal) */
+    trigger: function (event, obj) {
+      fire(this["on"+event], obj);
     },
 
     /** retryResource: (internal) */
     retryResource: function (fname) {
       var self = this;
 
-      this.triggerRetry(fname);
+      if (!this.retryCount[fname]) this.retryCount[fname] = 0;
+      this.retryCount[fname]++;
 
-      // 'recursive yepnope'
-      yepnope({
-        load: [fname],
-        callback: function (uri) { self.process(uri); }
-      });
+      if (this.retryCount[fname] > this.maxretries) {
+        // fail and give up, no more retries for this resource
+        this.trigger('fail', { uri: fname, retries: this.retryCount[fname] });
+      } else {
+        // try again
+        this.trigger('retry', { uri: fname, retries: this.retryCount[fname] });
+
+        // 'recursive yepnope'
+        yepnope({
+          load: [fname],
+          callback: function (uri) { self.process(uri); }
+        });
+      }
 
       return self;
     }
