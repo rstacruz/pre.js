@@ -636,6 +636,21 @@ var docElement            = doc.documentElement,
     },
 
     /**
+     * if : if(condition, fn)
+     * runs `fn` if `condition` is met.
+     *
+     * load()
+     *   .if(navigator.userAgent.match(/iOS/), function (load) {
+     *     load.js('...');
+     *   })
+     */
+
+    if: function (condition, fn) {
+      if (condition) fn(this);
+      return this;
+    },
+
+    /**
      * css : css(uri)
      * loads a CSS file from `uri`.
      */

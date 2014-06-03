@@ -91,3 +91,18 @@ describe 'load', ->
         .then(-> "aoeu")
 
       expect(Object.keys(ctx.callbacks)).have.length 0
+
+  describe '.if', ->
+    it 'false', ->
+      callback = sinon.spy()
+      ctx = load().if(false, callback)
+
+      expect(callback.called).be.false
+      expect(ctx.then).be.a 'function'
+
+    it 'true', ->
+      callback = sinon.spy()
+      ctx = load().if(true, callback)
+
+      expect(callback.calledOnce).be.true
+      expect(ctx.then).be.a 'function'
