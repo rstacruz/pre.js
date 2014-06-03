@@ -645,8 +645,9 @@ var docElement            = doc.documentElement,
      *   })
      */
 
-    if: function (condition, fn) {
+    if: function (condition, fn, elsefn) {
       if (condition) fn(this);
+      else if (elsefn) elsefn(this);
       return this;
     },
 

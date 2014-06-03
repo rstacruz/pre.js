@@ -100,6 +100,14 @@ describe 'load', ->
       expect(callback.called).be.false
       expect(ctx.then).be.a 'function'
 
+    it 'else', ->
+      ifCallback = sinon.spy()
+      elseCallback = sinon.spy()
+      ctx = load().if(false, ifCallback, elseCallback)
+
+      expect(ifCallback.called).be.false
+      expect(elseCallback.calledOnce).be.true
+
     it 'true', ->
       callback = sinon.spy()
       ctx = load().if(true, callback)
