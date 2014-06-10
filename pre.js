@@ -223,6 +223,8 @@
     }
   }
 
+  Pre.version = "0.0.1";
+
   if (typeof module === 'object')
     module.exports = Pre;
   else
