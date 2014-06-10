@@ -16,9 +16,11 @@ Pre()
 
 ## Usage
 
-```
-$ npm install --save pre-js
-```
+pre.js is available via bower and npm as `pre-js`.
+
+It's recommended to get [index.min.js] and paste it as the first line of a small 
+script (or use whatever build tool you prefer to do this for you). This way, you 
+get a `<4kb` script that manages the loading of other scripts.
 
 ## API reference
 
@@ -88,4 +90,6 @@ Pre()
 Implemented on top of yepnope.
 
 MIT.
+
+[index.min.js]: index.min.js
 
