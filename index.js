@@ -817,7 +817,7 @@ var docElement            = doc.documentElement,
     }
   }
 
-  Pre.version = "0.0.1";
+  Pre.version = "0.0.2";
 
   if (typeof module === 'object')
     module.exports = Pre;
