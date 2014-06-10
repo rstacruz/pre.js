@@ -24,8 +24,6 @@ Pre()
 
     npm install --save pre-js
 
-Great for use with [Webpack] or [Browserify]:
-
 ### Via bower
 
     bower install pre-js
@@ -36,11 +34,11 @@ Download [index.min.js].
 
 ### Recommended use
 
-Create a file like `load.js`, which contains *pre.js* and your loader.
-Use whatever build tool you prefer to do this for you, or paste [index.min.js] 
-in yourself.
+Create a file like `load.js`, which contains *pre.js* and your loader code.
+Use whatever build tool you prefer to do this for you. This gets you a small 
+`<4kb` loader you can use as a "gateway" to the rest of your app.
 
-With Webpack, it probably will be like this:
+With [Webpack] or [Browserify], it probably will be like this:
 
 ```js
 /* load.js */
@@ -155,3 +153,5 @@ MIT.
 
 [index.min.js]: index.min.js
 [pre.js]: pre.js
+[Browserify]: http://browserify.org
+[Webpack]: http://webpack.github.io
