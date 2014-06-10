@@ -1,8 +1,8 @@
 Pre.js
 ======
 
-Resilient efficient resource loader. Loads JS and CSS files in parallel, retries 
-when it fails, and executes callbacks when they've loaded.
+Resilient, efficient, small (2.5kb) resource loader. Loads JS and CSS files in 
+parallel, retries when it fails, and executes callbacks when they've loaded.
 
 ```js
 Pre()
@@ -84,10 +84,12 @@ Pre()
       .js('livereload.js')
       .js('weinre.js')
     })
+```
 
 ### Acknowledgements
 
-Implemented on top of yepnope.
+Implemented on top of [yepnope.js](http://yepnopejs.com/). In fact, it includes 
+yepnope.js.
 
 MIT.
 
