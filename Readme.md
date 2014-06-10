@@ -1,7 +1,8 @@
 pre.js
 ======
 
-Use pre.js to load your JS and CSS files efficiently.
+Use pre.js to load your JS and CSS files efficiently. Perfect for mobile apps 
+and sites where 3G can often fail.
 
  * __Petite:__ only 2.5kb gzipped.
  * __Resilient:__ Auto-retries downloads when they fail.
