@@ -1,18 +1,18 @@
-/** loader.js @license MIT */
+/** pre.js @license MIT */
 (function(window) {
   var yepnope;
 
   /***
-   * load():
+   * Pre():
    * creates a resource loader.
    *
-   *     load()
+   *     Pre()
    *       .js('jquery.js', function() { })
    */
 
-  var load = function() {
-    if (!(this instanceof load))
-      return new load();
+  var Pre = function() {
+    if (!(this instanceof Pre))
+      return new Pre();
 
     this.load = [];
     this.checks = {};
@@ -27,7 +27,7 @@
     return this;
   };
 
-  load.prototype = {
+  Pre.prototype = {
     /**
      * asset : asset(uri)
      * registers an asset to preload
@@ -51,9 +51,9 @@
      * if : if(condition, fn)
      * runs `fn` if `condition` is met.
      *
-     * load()
-     *   .if(navigator.userAgent.match(/iOS/), function (load) {
-     *     load.js('...');
+     * Pre()
+     *   .if(navigator.userAgent.match(/iOS/), function (Pre) {
+     *     Pre.js('...');
      *   })
      */
 
@@ -205,7 +205,7 @@
 
   function getYepnope() {
     var yn = window.yepnope || (window.Modernizr && window.Modernizr.load);
-    if (!yn) throw new Error("No yepnope");
+    if (!yn) throw new Error("pre.js: yepnope not found");
     return yn;
   }
 
@@ -224,7 +224,7 @@
   }
 
   if (typeof module === 'object')
-    module.exports = load;
+    module.exports = Pre;
   else
-    window.load = load;
+    window.Pre = Pre;
 })(this);

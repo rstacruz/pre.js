@@ -1,5 +1,5 @@
 {
-  "name": "loader",
+  "name": "pre-js",
   "version": "0.0.0",
   "description": "resilient, efficient resource loader",
   "main": "index.js",

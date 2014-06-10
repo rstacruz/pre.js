@@ -13,7 +13,7 @@ before (done) ->
 before require('./support/jsdom')
 
 before ->
-  load = window.load
+  load = window.Pre
 
 describe 'jsdom sanity', ->
   it 'load jsdom env', ->

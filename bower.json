@@ -1,0 +1,24 @@
+{
+  "name": "pre-js",
+  "main": "index.js",
+  "version": "0.0.1",
+  "authors": [
+    "Rico Sta. Cruz <hi@ricostacruz.com>"
+  ],
+  "description": "Resilient efficient resource loader",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "loader",
+    "preloader"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
