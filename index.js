@@ -3,7 +3,7 @@
 
 
 
-
+;(function(){
 // yepnope.js
 // Version - 1.5.4pre
 //
@@ -824,3 +824,4 @@ var docElement            = doc.documentElement,
   else
     window.Pre = Pre;
 })(this);
+})();
