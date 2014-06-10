@@ -101,17 +101,19 @@ Pre()
   /*
    * reports progress.
    */
-  .progress(function(e) {
+  .on('progress', function(e) {
     document.getElementById('progress').style.width = '' + e.percent*100 + '%';
     console.log("Loaded %s (%s of %s files loaded)", e.file, e.loaded, e.total);
   })
 
   /*
-   * reports retries when they happen.
+   * reports retries and failures when they happen.
    */
-  .retry(function (e) {
-    console.warn("Failed to fetch %s, retrying", e.file);
-    e.file;
+  .on('retry', function (e) {
+    console.warn("Failed to fetch %s, retrying", e.uri);
+  })
+  .on('fail', function (e) {
+    console.warn("Failed to load %s", e.uri);
   })
 
   /*
