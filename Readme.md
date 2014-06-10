@@ -20,11 +20,39 @@ Pre()
 
 ## Usage
 
-pre.js is available via bower and npm as `pre-js`.
+### Via NPM
 
-It's recommended to get [index.min.js] and paste it as the first line of a small 
-script (or use whatever build tool you prefer to do this for you). This way, you 
-get a `<4kb` script that manages the loading of other scripts.
+    npm install --save pre-js
+
+Great for use with [Webpack] or [Browserify]:
+
+### Via bower
+
+    bower install pre-js
+
+### Manual
+
+Download [index.min.js].
+
+### Recommended use
+
+Create a file like `load.js`, which contains *pre.js* and your loader.
+Use whatever build tool you prefer to do this for you, or paste [index.min.js] 
+in yourself.
+
+With Webpack, it probably will be like this:
+
+```js
+/* load.js */
+var Pre = require('pre-js');
+Pre()
+  .css('/assets/app.css')
+  .js ('/assets/vendor.js', function() { return window.jQuery; })
+  .js ('/assets/app.js',    function() { return window.App; })
+  .then({
+    App.start();
+  })
+```
 
 ## API reference
 

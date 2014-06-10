@@ -1,2 +1,2 @@
--R spec
+-R dot
 --compilers coffee:coffee-script/register

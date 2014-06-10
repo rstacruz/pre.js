@@ -6,7 +6,7 @@ afterEach  -> global.sinon.restore()
 
 before (done) ->
   spawn = require('child_process').spawn
-  proc = spawn('npm', ['run', 'prepublish'])
+  proc = spawn('make')
   proc.on 'exit', -> done()
 
 # set up jsdom

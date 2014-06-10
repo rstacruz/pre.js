@@ -16,7 +16,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "prepublish": "make"
+    "prepublish": "make && mocha"
   },
   "author": "Rico Sta. Cruz <hi@ricostacruz.com>",
   "license": "MIT"
