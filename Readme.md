@@ -1,8 +1,13 @@
-Pre.js
+pre.js
 ======
 
-Resilient, efficient, small (2.5kb) resource loader. Loads JS and CSS files in 
-parallel, retries when it fails, and executes callbacks when they've loaded.
+Resilient, efficient, small (2.5kb) resource loader.
+
+Use pre.js to load your JS and CSS files efficiently.
+
+ * Downloads files in parallel
+ * Auto-retries downloads when they fail
+ * Allows running of callbacks once certain scripts are loaded
 
 ```js
 Pre()
@@ -24,6 +29,9 @@ get a `<4kb` script that manages the loading of other scripts.
 
 ## API reference
 
+See [pre.js]'s inline comments for more info. Here's a quick reference of the 
+API:
+
 ```js
 Pre()
   // set the number of retries.
@@ -37,6 +45,7 @@ Pre()
   .js('/app.js', function() { return window.App; })
 
   // define callbacks to execute.
+  // these will run after the last `.js` or `.css` file is loaded.
   .then(function() {
     google.api.load('maps');
     App.start();
@@ -59,6 +68,11 @@ Pre()
   .retry(function (e) {
     console.warn("Failed to fetch %s, retrying", e.file);
     e.file;
+  })
+
+  // Conditionals: runs the function block if `condition` is true.
+  .if(condition, function (pre) {
+    pre.js('...');
   })
 
 ```
@@ -94,4 +108,4 @@ yepnope.js.
 MIT.
 
 [index.min.js]: index.min.js
-
+[pre.js]: pre.js
