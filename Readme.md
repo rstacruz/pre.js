@@ -16,6 +16,7 @@ Pre()
   .then({
     App.start();
   })
+  .run();
 ```
 
 ## Usage
@@ -50,6 +51,7 @@ Pre()
   .then({
     App.start();
   })
+  .run();
 ```
 
 ## API reference
@@ -118,6 +120,11 @@ Pre()
   .if(condition, function (pre) {
     pre.js('...');
   })
+
+  /*
+   * put this at the end of everything.
+   */
+  .run();
 
 ```
 
