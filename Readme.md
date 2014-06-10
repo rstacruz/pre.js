@@ -153,7 +153,20 @@ Pre()
     })
 ```
 
-### Acknowledgements
+### CoffeeScript
+
+Better with CoffeeScript, if that's your thing:
+
+```coffee
+Pre()
+  .css 'style.css'
+  .js  'jquery.js', -> jQuery?
+  .js  'app.js',    -> App?
+  .then -> App.start()
+  .run()
+```
+
+## Acknowledgements
 
 Implemented on top of [yepnope.js](http://yepnopejs.com/). In fact, it includes 
 yepnope.js.
