@@ -17,9 +17,13 @@ before require('./support/jsdom')
 before ->
   load = window.Pre
 
+# disable the check that stops multiple .run() calls
 beforeEach ->
-  # reset
   load.ran = false
+
+# prevent .run() from being called automatically
+afterEach ->
+  clearTimeout(load.timeout) if load.timeout?
 
 describe 'jsdom sanity', ->
   it 'load jsdom env', ->

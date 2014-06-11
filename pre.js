@@ -14,18 +14,20 @@
     if (!(this instanceof Pre))
       return new Pre();
 
-    this.load = [];
-    this.checks = {};
-    this.callbacks = {};
-    this.completed = 0;
-    this.last = null;
-    this.onfail = [];
-    this.onprogress = [];
-    this.onretry = [];
-    this.maxretries = 3;
-    this.retryCount = {};
-    this.ran = false;
-    return this;
+    var self = this;
+    self.load = [];
+    self.checks = {};
+    self.callbacks = {};
+    self.completed = 0;
+    self.last = null;
+    self.onfail = [];
+    self.onprogress = [];
+    self.onretry = [];
+    self.maxretries = 3;
+    self.retryCount = {};
+    self.ran = false;
+    Pre.timeout = self.timeout = setTimeout(function() { self.run(); }, 0);
+    return self;
   };
 
   Pre.prototype = {
