@@ -608,17 +608,20 @@ var docElement            = doc.documentElement,
     if (!(this instanceof Pre))
       return new Pre();
 
-    this.load = [];
-    this.checks = {};
-    this.callbacks = {};
-    this.completed = 0;
-    this.last = null;
-    this.onfail = [];
-    this.onprogress = [];
-    this.onretry = [];
-    this.maxretries = 3;
-    this.retryCount = {};
-    return this;
+    var self = this;
+    self.load = [];
+    self.checks = {};
+    self.callbacks = {};
+    self.completed = 0;
+    self.last = null;
+    self.onfail = [];
+    self.onprogress = [];
+    self.onretry = [];
+    self.maxretries = 3;
+    self.retryCount = {};
+    self.ran = false;
+    Pre.timeout = self.timeout = setTimeout(function() { self.run(); }, 0);
+    return self;
   };
 
   Pre.prototype = {
@@ -715,18 +718,22 @@ var docElement            = doc.documentElement,
 
     /**
      * run:
-     * runs.
+     * (internal) runs. this is called automatically after `setTimeout(fn,0)`,
+     * but you can invoke it manually if you wish it to run sooner.
      */
 
     run: function (yn) {
       var self = this;
+      if (self.ran) return self;
+
+      self.ran = true;
       yepnope = yn || getYepnope();
       yepnope({
-        load: this.load,
+        load: self.load,
         callback: function (uri) { self.process(uri); }
       });
 
-      return this;
+      return self;
     },
 
     /**
@@ -817,7 +824,7 @@ var docElement            = doc.documentElement,
     }
   }
 
-  Pre.version = "0.0.2";
+  Pre.version = "0.1.0";
 
   if (typeof module === 'object')
     module.exports = Pre;

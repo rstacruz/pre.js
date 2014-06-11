@@ -230,7 +230,7 @@
     }
   }
 
-  Pre.version = "0.0.2";
+  Pre.version = "0.1.0";
 
   if (typeof module === 'object')
     module.exports = Pre;
