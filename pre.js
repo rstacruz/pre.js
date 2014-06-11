@@ -24,6 +24,7 @@
     this.onretry = [];
     this.maxretries = 3;
     this.retryCount = {};
+    this.ran = false;
     return this;
   };
 
@@ -126,13 +127,16 @@
 
     run: function (yn) {
       var self = this;
+      if (self.ran) return self;
+
+      self.ran = true;
       yepnope = yn || getYepnope();
       yepnope({
-        load: this.load,
+        load: self.load,
         callback: function (uri) { self.process(uri); }
       });
 
-      return this;
+      return self;
     },
 
     /**
