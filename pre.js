@@ -124,7 +124,8 @@
 
     /**
      * run:
-     * runs.
+     * (internal) runs. this is called automatically after `setTimeout(fn,0)`,
+     * but you can invoke it manually if you wish it to run sooner.
      */
 
     run: function (yn) {

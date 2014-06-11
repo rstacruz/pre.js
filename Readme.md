@@ -16,8 +16,7 @@ Pre()
   .js('/assets/app.js', function() { return window.App; })
   .then({
     App.start();
-  })
-  .run();
+  });
 ```
 
 ## Usage
@@ -51,8 +50,7 @@ Pre()
   .js ('/assets/app.js',    function() { return window.App; })
   .then({
     App.start();
-  })
-  .run();
+  });
 ```
 
 ## API reference
@@ -123,12 +121,6 @@ Pre()
   .if(condition, function (pre) {
     pre.js('...');
   })
-
-  /*
-   * put this at the end of everything.
-   */
-  .run();
-
 ```
 
 ### Conditional loading
@@ -164,7 +156,6 @@ Pre()
   .js  'jquery.js', -> jQuery?
   .js  'app.js',    -> App?
   .then -> App.start()
-  .run()
 ```
 
 ## Acknowledgements
