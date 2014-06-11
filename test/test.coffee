@@ -8,7 +8,7 @@ yepnope = null
 
 before (done) ->
   spawn = require('child_process').spawn
-  proc = spawn('make')
+  proc = spawn('make', ['-B'])
   proc.on 'exit', -> done()
 
 # set up jsdom
@@ -76,7 +76,8 @@ describe 'pre.js', ->
         .on('progress', -> called += '1')
         .on('progress', -> called += '2')
 
-      ctx.triggerProgress('jquery.js', true)
+      triggerProgress = if ctx.triggerProgress then 'triggerProgress' else 'A'
+      ctx[triggerProgress]('jquery.js', true)
       expect(called).to.eq "12"
 
   describe '.then', ->
@@ -85,7 +86,8 @@ describe 'pre.js', ->
         .js('foo.js', -> true)
         .then(-> "aoeu")
 
-      expect(ctx.callbacks['foo.js'].toString()).to.match /aoeu/
+      callbacks = ctx.callbacks || ctx.C
+      expect(callbacks['foo.js'].toString()).to.match /aoeu/
 
     it 'adds 2 callbacks', ->
       ctx = load()
@@ -93,14 +95,16 @@ describe 'pre.js', ->
         .then(-> "aoeu")
         .then(-> "htns")
 
-      expect(ctx.callbacks['foo.js'][0]).to.match /aoeu/
-      expect(ctx.callbacks['foo.js'][1]).to.match /htns/
+      callbacks = ctx.callbacks || ctx.C
+      expect(callbacks['foo.js'][0]).to.match /aoeu/
+      expect(callbacks['foo.js'][1]).to.match /htns/
 
     it 'does nothing without any assets', ->
       ctx = load()
         .then(-> "aoeu")
 
-      expect(Object.keys(ctx.callbacks)).have.length 0
+      callbacks = ctx.callbacks || ctx.C
+      expect(Object.keys(callbacks)).have.length 0
 
   describe '.if', ->
     it 'false', ->

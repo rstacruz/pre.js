@@ -1,7 +1,7 @@
 module.exports = function(next) {
   require('jsdom').env({
     html: '<!doctype html><html><head><script></script></head><body></body></html>',
-    src: [require('fs').readFileSync(__dirname + '/../../index.js')],
+    src: [require('fs').readFileSync(__dirname + '/../../index.min.js')],
     done: function(errors, window) {
       window.console = console;
       window.history.replaceState(null, '', '/');
