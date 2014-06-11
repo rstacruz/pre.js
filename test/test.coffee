@@ -1,8 +1,10 @@
 expect = require('chai').expect
-load = null
 
 beforeEach -> global.sinon = require('sinon').sandbox.create()
 afterEach  -> global.sinon.restore()
+
+load = null
+yepnope = null
 
 before (done) ->
   spawn = require('child_process').spawn
@@ -15,6 +17,10 @@ before require('./support/jsdom')
 before ->
   load = window.Pre
 
+beforeEach ->
+  # reset
+  load.ran = false
+
 describe 'jsdom sanity', ->
   it 'load jsdom env', ->
     expect(window).to.be.a 'object'
@@ -23,9 +29,9 @@ describe 'jsdom sanity', ->
   it 'should have yep', ->
     expect(window.yepnope).to.be.a 'function'
 
-describe 'load', ->
+describe 'pre.js', ->
   beforeEach ->
-    global.yepnope = ->
+    yepnope = window.yepnope = sinon.spy()
 
   it 'defaults', ->
     ctx = load()
@@ -114,3 +120,21 @@ describe 'load', ->
 
       expect(callback.calledOnce).be.true
       expect(ctx.then).be.a 'function'
+
+  describe 'loading', ->
+    it 'runs .js', ->
+      load().js('x').run()
+      expect(yepnope.callCount).eql 1
+      expect(yepnope.firstCall.args[0]).be.a 'object'
+      expect(yepnope.firstCall.args[0].load).eql ['x']
+
+    it 'runs .css', ->
+      load().css('x').run()
+      expect(yepnope.callCount).eql 1
+      expect(yepnope.firstCall.args[0]).be.a 'object'
+      expect(yepnope.firstCall.args[0].load).eql ['css!x']
+
+  describe '.run', ->
+    it 'can only be ran once', ->
+      load().js('x').run().run()
+      expect(yepnope.callCount).eql 1
