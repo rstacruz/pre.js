@@ -6,11 +6,9 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-    "chai": "~1.9.1",
-    "sinon": "~1.8.2"
-  },
   "devDependencies": {
+    "chai": "~1.9.1",
+    "sinon": "~1.8.2",
     "mocha": "~1.17.1",
     "coffee-script": "~1.7.1"
   },
