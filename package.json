@@ -16,6 +16,7 @@
   },
   "scripts": {
     "test": "mocha",
+    "coverage": "(cp index.min.js index.min.js~; jscoverage index.min.js; mv index.min-cov.js index.min.js; mocha -R html-cov > coverage.html); mv index.min.js~ index.min.js",
     "prepublish": "make && mocha"
   },
   "author": "Rico Sta. Cruz <hi@ricostacruz.com>",
