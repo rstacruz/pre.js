@@ -8,6 +8,8 @@ and sites where 3G can often fail.
  * __Resilient:__ Auto-retries downloads when they fail.
  * __Efficient:__ Downloads files in parallel.
 
+[![Status](https://travis-ci.org/rstacruz/pre.js.svg?branch=master)](https://travis-ci.org/rstacruz/pre.js)  
+
 ```js
 Pre()
   .retries(10)
@@ -21,17 +23,16 @@ Pre()
 
 ## Usage
 
-### Via NPM
+Use [index.min.js].
 
-    npm install --save pre-js
+pre.js is available via [bower] and [npm].
 
-### Via bower
+    $ bower install --save pre-js
+    $ npm install --save pre-js
 
-    bower install pre-js
-
-### Manual
-
-Download [index.min.js].
+[![npm version](https://img.shields.io/npm/v/pre-js.png)](https://npmjs.org/package/pre-js "View this project on npm")
+[bower]: http://bower.io/search/?q=pre-js
+[npm]: https://www.npmjs.org/package/pre-js
 
 ### Recommended use
 
@@ -163,9 +164,19 @@ Pre()
 Implemented on top of [yepnope.js](http://yepnopejs.com/). In fact, it includes 
 yepnope.js.
 
-MIT.
-
 [index.min.js]: index.min.js
 [pre.js]: pre.js
 [Browserify]: http://browserify.org
 [Webpack]: http://webpack.github.io
+
+© 2014, Rico Sta. Cruz. Released under the [MIT License](License.md).
+
+**pre.js** is authored and maintained by [Rico Sta. Cruz][rsc] with help 
+from its [contributors][c].
+
+ * [My website](http://ricostacruz.com) (ricostacruz.com)
+ * [Github](http://github.com/rstacruz) (@rstacruz)
+ * [Twitter](http://twitter.com/rstacruz) (@rstacruz)
+
+[rsc]: http://ricostacruz.com
+[c]:   http://github.com/rstacruz/pre.js/contributors
