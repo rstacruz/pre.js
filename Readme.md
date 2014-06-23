@@ -161,18 +161,13 @@ Pre()
 
 ## Acknowledgements
 
-Implemented on top of [yepnope.js](http://yepnopejs.com/). In fact, it includes 
-yepnope.js.
+**pre.js** © 2014, Rico Sta. Cruz. Released under the [MIT License](License.md).
 
-[index.min.js]: index.min.js
-[pre.js]: pre.js
-[Browserify]: http://browserify.org
-[Webpack]: http://webpack.github.io
+Includes code from [yepnope.js](http://yepnopejs.com/), released under WTFPL.
+© 2012 Alex Sexton & Ralph Holzmann.
 
-© 2014, Rico Sta. Cruz. Released under the [MIT License](License.md).
-
-**pre.js** is authored and maintained by [Rico Sta. Cruz][rsc] with help 
-from its [contributors][c].
+Authored and maintained by [Rico Sta. Cruz][rsc] with help from
+[contributors][c].
 
  * [My website](http://ricostacruz.com) (ricostacruz.com)
  * [Github](http://github.com/rstacruz) (@rstacruz)
@@ -180,3 +175,8 @@ from its [contributors][c].
 
 [rsc]: http://ricostacruz.com
 [c]:   http://github.com/rstacruz/pre.js/contributors
+[index.min.js]: index.min.js
+[pre.js]: pre.js
+[Browserify]: http://browserify.org
+[Webpack]: http://webpack.github.io
+
