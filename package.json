@@ -10,7 +10,9 @@
     "chai": "~1.9.1",
     "sinon": "~1.8.2",
     "mocha": "~1.17.1",
-    "coffee-script": "~1.7.1"
+    "coffee-script": "~1.7.1",
+    "jsdom": "~0.10.4",
+    "jscoverage": "0.3.8"
   },
   "scripts": {
     "test": "mocha",
