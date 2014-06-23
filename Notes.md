@@ -1,3 +1,8 @@
+### Testing
+
+    npm test
+    npm run coverage       # doesn't work yet
+
 ### Updating
 
     bump *.json *.js
