@@ -1,6 +1,6 @@
 {
   "name": "pre-js",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "resilient, efficient resource loader",
   "main": "index.js",
   "directories": {
