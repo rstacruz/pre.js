@@ -56,8 +56,7 @@ Pre()
 
 ## API reference
 
-See [pre.js]'s inline comments for more info. Here's a quick reference of the 
-API:
+Here's a quick reference of the API:
 
 ```js
 Pre()
@@ -158,6 +157,123 @@ Pre()
   .js  'app.js',    -> App?
   .then -> App.start()
 ```
+
+<!-- include: pre.js -->
+
+## Pre()
+
+creates a resource loader.
+
+```js
+Pre()
+  .js('jquery.js', function() { })
+```
+
+### asset()
+> `asset(uri)`
+
+registers an asset to preload. This usually refers to an image or a font.
+
+```js
+pre()
+  .asset('/images/logo.jpg')
+```
+
+### js()
+> `js(uri, fn)`
+
+loads a JavaScript resource from `uri`. A check function `fn` may be
+supplied to check if the thing loaded properly.
+
+```js
+pre()
+  .js('jquery.js', function () { return jQuery; })
+```
+
+### if()
+> `if(condition, fn)`
+
+runs `fn` if `condition` is met.
+
+Pre()
+  .if(navigator.userAgent.match(/iOS/), function (Pre) {
+    Pre.js('...');
+  })
+
+### css()
+> `css(uri)`
+
+loads a CSS file from `uri`.
+
+```js
+pre()
+  .asset('/css/style.css')
+```
+
+### add()
+
+(internal)
+
+### retries()
+> `retries(n)`
+
+Sets the maximum number of retries to `n`.
+
+```js
+pre()
+  .retries(4)
+  .retryDelay(5000)
+  .js('/app.js')
+```
+
+### retryDelay()
+> `retryDelay(ms)`
+
+Sets the retry delay to `ms` milliseconds. When a resource fails to
+load, pre.js will wait for this much time before retrying.
+
+Defaults to `5000` miliseconds. See [retry()](#retry) for an example.
+
+### then()
+> `then(fn)`
+
+registers a success callback function for the previous asset.
+
+```js
+pre()
+  .js('/app.js')
+  .then(function() { ... })
+```
+
+### on()
+> `on(event, fn)`
+
+registers a callback. event can either be `progress` or `retry`.
+
+```js
+pre()
+  .js('/app.js')
+  .on('retry', function (e) {
+    console.warn("Failed to fetch %s, retrying", e.uri);
+  })
+  .on('fail', function (e) {
+    console.warn("Failed to load %s", e.uri);
+  })
+```
+
+### triggerProgress()
+
+(internal)
+
+### trigger()
+
+(internal)
+
+### retryResource()
+
+(internal)
+
+<!-- /include -->
 
 ## Acknowledgements
 

@@ -1,4 +1,4 @@
-/** pre.js @license MIT */
+/* pre.js @license MIT */
 (function(window) {
   var yepnope;
 
@@ -33,8 +33,11 @@
 
   Pre.prototype = {
     /**
-     * asset : asset(uri)
-     * registers an asset to preload
+     * asset() : asset(uri)
+     * registers an asset to preload. This usually refers to an image or a font.
+     *
+     *     pre()
+     *       .asset('/images/logo.jpg')
      */
 
     asset: function (uri, fn) {
@@ -42,9 +45,12 @@
     },
 
     /**
-     * js : js(uri, fn)
+     * js() : js(uri, fn)
      * loads a JavaScript resource from `uri`. A check function `fn` may be
      * supplied to check if the thing loaded properly.
+     *
+     *     pre()
+     *       .js('jquery.js', function () { return jQuery; })
      */
 
     js: function (uri, fn) {
@@ -52,7 +58,7 @@
     },
 
     /**
-     * if : if(condition, fn)
+     * if() : if(condition, fn)
      * runs `fn` if `condition` is met.
      *
      * Pre()
@@ -68,8 +74,11 @@
     },
 
     /**
-     * css : css(uri)
+     * css() : css(uri)
      * loads a CSS file from `uri`.
+     *
+     *     pre()
+     *       .asset('/css/style.css')
      */
 
     css: function (uri, fn) {
@@ -77,7 +86,7 @@
     },
 
     /**
-     * add:
+     * add():
      * (internal)
      */
 
@@ -91,8 +100,13 @@
     },
 
     /**
-     * retries : retries(n)
+     * retries() : retries(n)
      * Sets the maximum number of retries to `n`.
+     *
+     *     pre()
+     *       .retries(4)
+     *       .retryDelay(5000)
+     *       .js('/app.js')
      */
 
     retries: function (n) {
@@ -102,8 +116,26 @@
     },
 
     /**
-     * then : then(fn)
+     * retryDelay() : retryDelay(ms)
+     * Sets the retry delay to `ms` milliseconds. When a resource fails to
+     * load, pre.js will wait for this much time before retrying.
+     *
+     * Defaults to `5000` miliseconds. See [retry()](#retry) for an example.
+     */
+
+    retryDelay: function (ms) {
+      if (arguments.length === 0) return this._retryDelay;
+      this._retryDelay = ms;
+      return this;
+    },
+
+    /**
+     * then() : then(fn)
      * registers a success callback function for the previous asset.
+     *
+     *     pre()
+     *       .js('/app.js')
+     *       .then(function() { ... })
      */
 
     then: function (fn) {
@@ -114,8 +146,17 @@
     },
 
     /**
-     * on : on(event, fn)
-     * registers a callback. event can either be 'progress' or 'retry'.
+     * on() : on(event, fn)
+     * registers a callback. event can either be `progress` or `retry`.
+     *
+     *     pre()
+     *       .js('/app.js')
+     *       .on('retry', function (e) {
+     *         console.warn("Failed to fetch %s, retrying", e.uri);
+     *       })
+     *       .on('fail', function (e) {
+     *         console.warn("Failed to load %s", e.uri);
+     *       })
      */
 
     on: function (event, fn) {
@@ -125,7 +166,7 @@
     },
 
     /**
-     * run:
+     * run():
      * (internal) runs. this is called automatically after `setTimeout(fn,0)`,
      * but you can invoke it manually if you wish it to run sooner.
      */
@@ -145,7 +186,7 @@
     },
 
     /**
-     * process:
+     * process():
      * (internal) processes a file's completion.
      */
 
@@ -168,7 +209,7 @@
       return this;
     },
 
-    /** triggerProgress: (internal) */
+    /** triggerProgress(): (internal) */
     triggerProgress: function (fname) {
       fire(this.onprogress, {
         uri: fname,
@@ -178,12 +219,12 @@
       });
     },
 
-    /** trigger: (internal) */
+    /** trigger(): (internal) */
     trigger: function (event, obj) {
       fire(this["on"+event], obj);
     },
 
-    /** retryResource: (internal) */
+    /** retryResource(): (internal) */
     retryResource: function (fname) {
       var self = this;
 
@@ -221,7 +262,7 @@
   }
 
   /**
-   * fires callbacks
+   * (internal) fires callbacks
    */
 
   function fire (list) {
