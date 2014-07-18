@@ -261,18 +261,6 @@ pre()
   })
 ```
 
-### triggerProgress()
-
-(internal)
-
-### trigger()
-
-(internal)
-
-### retryResource()
-
-(internal)
-
 <!-- /include -->
 
 ## Thanks

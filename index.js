@@ -592,7 +592,7 @@ var docElement            = doc.documentElement,
     return resource;
   });
 } )( this.yepnope );
-/** pre.js @license MIT */
+/* pre.js @license MIT */
 (function(window) {
   var yepnope;
 
@@ -627,8 +627,11 @@ var docElement            = doc.documentElement,
 
   Pre.prototype = {
     /**
-     * asset : asset(uri)
-     * registers an asset to preload
+     * asset() : asset(uri)
+     * registers an asset to preload. This usually refers to an image or a font.
+     *
+     *     pre()
+     *       .asset('/images/logo.jpg')
      */
 
     asset: function (uri, fn) {
@@ -636,9 +639,12 @@ var docElement            = doc.documentElement,
     },
 
     /**
-     * js : js(uri, fn)
+     * js() : js(uri, fn)
      * loads a JavaScript resource from `uri`. A check function `fn` may be
      * supplied to check if the thing loaded properly.
+     *
+     *     pre()
+     *       .js('jquery.js', function () { return jQuery; })
      */
 
     js: function (uri, fn) {
@@ -646,7 +652,7 @@ var docElement            = doc.documentElement,
     },
 
     /**
-     * if : if(condition, fn)
+     * if() : if(condition, fn)
      * runs `fn` if `condition` is met.
      *
      * Pre()
@@ -662,8 +668,11 @@ var docElement            = doc.documentElement,
     },
 
     /**
-     * css : css(uri)
+     * css() : css(uri)
      * loads a CSS file from `uri`.
+     *
+     *     pre()
+     *       .asset('/css/style.css')
      */
 
     css: function (uri, fn) {
@@ -671,7 +680,7 @@ var docElement            = doc.documentElement,
     },
 
     /**
-     * add:
+     * add():
      * (internal)
      */
 
@@ -685,8 +694,13 @@ var docElement            = doc.documentElement,
     },
 
     /**
-     * retries : retries(n)
+     * retries() : retries(n)
      * Sets the maximum number of retries to `n`.
+     *
+     *     pre()
+     *       .retries(4)
+     *       .retryDelay(5000)
+     *       .js('/app.js')
      */
 
     retries: function (n) {
@@ -696,8 +710,26 @@ var docElement            = doc.documentElement,
     },
 
     /**
-     * then : then(fn)
+     * retryDelay() : retryDelay(ms)
+     * Sets the retry delay to `ms` milliseconds. When a resource fails to
+     * load, pre.js will wait for this much time before retrying.
+     *
+     * Defaults to `5000` miliseconds. See [retry()](#retry) for an example.
+     */
+
+    retryDelay: function (ms) {
+      if (arguments.length === 0) return this._retryDelay;
+      this._retryDelay = ms;
+      return this;
+    },
+
+    /**
+     * then() : then(fn)
      * registers a success callback function for the previous asset.
+     *
+     *     pre()
+     *       .js('/app.js')
+     *       .then(function() { ... })
      */
 
     then: function (fn) {
@@ -708,8 +740,17 @@ var docElement            = doc.documentElement,
     },
 
     /**
-     * on : on(event, fn)
-     * registers a callback. event can either be 'progress' or 'retry'.
+     * on() : on(event, fn)
+     * registers a callback. event can either be `progress` or `retry`.
+     *
+     *     pre()
+     *       .js('/app.js')
+     *       .on('retry', function (e) {
+     *         console.warn("Failed to fetch %s, retrying", e.uri);
+     *       })
+     *       .on('fail', function (e) {
+     *         console.warn("Failed to load %s", e.uri);
+     *       })
      */
 
     on: function (event, fn) {
@@ -719,7 +760,7 @@ var docElement            = doc.documentElement,
     },
 
     /**
-     * run:
+     * run():
      * (internal) runs. this is called automatically after `setTimeout(fn,0)`,
      * but you can invoke it manually if you wish it to run sooner.
      */
@@ -739,7 +780,7 @@ var docElement            = doc.documentElement,
     },
 
     /**
-     * process:
+     * process():
      * (internal) processes a file's completion.
      */
 
@@ -762,7 +803,7 @@ var docElement            = doc.documentElement,
       return this;
     },
 
-    /** triggerProgress: (internal) */
+    /** triggerProgress(): (internal) triggers a progress event. */
     triggerProgress: function (fname) {
       fire(this.onprogress, {
         uri: fname,
@@ -772,12 +813,12 @@ var docElement            = doc.documentElement,
       });
     },
 
-    /** trigger: (internal) */
+    /** trigger(): (internal) triggers a given event. */
     trigger: function (event, obj) {
       fire(this["on"+event], obj);
     },
 
-    /** retryResource: (internal) */
+    /** retryResource(): (internal) retries a given resource. */
     retryResource: function (fname) {
       var self = this;
 
@@ -815,7 +856,7 @@ var docElement            = doc.documentElement,
   }
 
   /**
-   * fires callbacks
+   * (internal) fires callbacks
    */
 
   function fire (list) {

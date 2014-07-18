@@ -209,7 +209,7 @@
       return this;
     },
 
-    /** triggerProgress(): (internal) */
+    /** triggerProgress(): (internal) triggers a progress event. */
     triggerProgress: function (fname) {
       fire(this.onprogress, {
         uri: fname,
@@ -219,12 +219,12 @@
       });
     },
 
-    /** trigger(): (internal) */
+    /** trigger(): (internal) triggers a given event. */
     trigger: function (event, obj) {
       fire(this["on"+event], obj);
     },
 
-    /** retryResource(): (internal) */
+    /** retryResource(): (internal) retries a given resource. */
     retryResource: function (fname) {
       var self = this;
 
