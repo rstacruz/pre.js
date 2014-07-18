@@ -1,3 +1,8 @@
+## v0.2.0 - unreleased
+
+ * Add a `.retryDelay(ms)` option to wait in between retries.
+ * Updated documentation.
+
 ## 0.1.2 / 2014-07-05
 
  * Add a package `repository` field to supress npm warnings.
