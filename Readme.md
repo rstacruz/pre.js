@@ -275,19 +275,20 @@ pre()
 
 <!-- /include -->
 
-## Acknowledgements
+## Thanks
 
-**pre.js** © 2014, Rico Sta. Cruz. Released under the [MIT License](License.md).
+**pre.js** © 2014+, Rico Sta. Cruz. Released under the [MIT License].<br>
+Authored and maintained by Rico Sta. Cruz with help from [contributors].
 
 Includes code from [yepnope.js](http://yepnopejs.com/), released under WTFPL.
 © 2012 Alex Sexton & Ralph Holzmann.
 
-Authored and maintained by [Rico Sta. Cruz][rsc] with help from
-[contributors][c].
+> [ricostacruz.com](http://ricostacruz.com) &nbsp;&middot;&nbsp;
+> GitHub [@rstacruz](https://github.com/rstacruz) &nbsp;&middot;&nbsp;
+> Twitter [@rstacruz](https://twitter.com/rstacruz)
 
- * [My website](http://ricostacruz.com) (ricostacruz.com)
- * [Github](http://github.com/rstacruz) (@rstacruz)
- * [Twitter](http://twitter.com/rstacruz) (@rstacruz)
+[MIT License]: http://mit-license.org/
+[contributors]: http://github.com/rstacruz/nprogress/contributors
 
 [rsc]: http://ricostacruz.com
 [c]:   http://github.com/rstacruz/pre.js/contributors
@@ -295,4 +296,3 @@ Authored and maintained by [Rico Sta. Cruz][rsc] with help from
 [pre.js]: pre.js
 [Browserify]: http://browserify.org
 [Webpack]: http://webpack.github.io
-
