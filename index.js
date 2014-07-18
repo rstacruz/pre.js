@@ -598,10 +598,17 @@ var docElement            = doc.documentElement,
 
   /***
    * Pre():
-   * creates a resource loader.
+   * creates a resource loader. This is registered as `window.Pre`.
    *
    *     Pre()
-   *       .js('jquery.js', function() { })
+   *       .js('jquery.js', function() { ... })
+   *
+   * When pre.js is loaded via CommonJS, this is the object that's returned by
+   * the module.
+   *
+   *     var Pre = require('pre-js');
+   *     Pre()
+   *       .js('jquery.js', function() { ... })
    */
 
   var Pre = function() {

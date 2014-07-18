@@ -162,11 +162,20 @@ Pre()
 
 ## Pre()
 
-creates a resource loader.
+creates a resource loader. This is registered as `window.Pre`.
 
 ```js
 Pre()
-  .js('jquery.js', function() { })
+  .js('jquery.js', function() { ... })
+```
+
+When pre.js is loaded via CommonJS, this is the object that's returned by
+the module.
+
+```js
+var Pre = require('pre-js');
+Pre()
+  .js('jquery.js', function() { ... })
 ```
 
 ### asset()
@@ -284,3 +293,5 @@ Includes code from [yepnope.js](http://yepnopejs.com/), released under WTFPL.
 [pre.js]: pre.js
 [Browserify]: http://browserify.org
 [Webpack]: http://webpack.github.io
+
+[retries()]: #retries
