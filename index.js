@@ -619,6 +619,7 @@ var docElement            = doc.documentElement,
     self.onretry = [];
     self.maxretries = 3;
     self.retryCount = {};
+    self._retryDelay = 5000;
     self.ran = false;
     Pre.timeout = self.timeout = setTimeout(function() { self.run(); }, 0);
     return self;
@@ -670,7 +671,8 @@ var docElement            = doc.documentElement,
     },
 
     /**
-     * add: (internal)
+     * add:
+     * (internal)
      */
 
     add: function (uri, fn, options) {
@@ -790,10 +792,12 @@ var docElement            = doc.documentElement,
         this.trigger('retry', { uri: fname, retries: this.retryCount[fname] });
 
         // 'recursive yepnope'
-        yepnope({
-          load: [fname],
-          callback: function (uri) { self.process(uri); }
-        });
+        setTimeout(function () {
+          yepnope({
+            load: [fname],
+            callback: function (uri) { self.process(uri); }
+          });
+        }, self._retryDelay);
       }
 
       return self;
