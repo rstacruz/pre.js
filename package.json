@@ -13,7 +13,8 @@
     "jsdom": "~0.10.4",
     "mdextract": "^1.0.0",
     "mocha": "~1.17.1",
-    "sinon": "~1.8.2"
+    "sinon": "~1.8.2",
+    "uglify-js": "^2.4.15"
   },
   "scripts": {
     "test": "mocha",

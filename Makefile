@@ -12,7 +12,7 @@ Readme.md: pre.js
 	${bin}/mdextract --update $@
 
 index.min.js: index.js
-	uglifyjs -m --comments < $^ \
+	${bin}/uglifyjs -m --comments < $^ \
 		| sed 's/triggerProgress/A/g' \
 		| sed 's/triggerRetry/B/g' \
 		| sed 's/callbacks/C/g' \

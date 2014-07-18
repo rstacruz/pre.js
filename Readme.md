@@ -241,7 +241,7 @@ pre()
 Sets the retry delay to `ms` milliseconds. When a resource fails to
 load, pre.js will wait for this much time before retrying.
 
-Defaults to `5000` miliseconds. See [retry()](#retry) for an example.
+Defaults to `5000` miliseconds. See [retries()] for an example.
 
 ### then()
 > `then(fn)`
