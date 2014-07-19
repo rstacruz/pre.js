@@ -660,12 +660,13 @@ var docElement            = doc.documentElement,
 
     /**
      * if() : if(condition, fn)
-     * runs `fn` if `condition` is met.
+     * runs `fn` if `condition` is met. The instance of `Pre` will be passed
+     * onto the function for convenience.
      *
-     * Pre()
-     *   .if(navigator.userAgent.match(/iOS/), function (Pre) {
-     *     Pre.js('...');
-     *   })
+     *     Pre()
+     *       .if(navigator.userAgent.match(/iOS/), function (Pre) {
+     *         Pre.js('...');
+     *       })
      */
 
     if: function (condition, fn, elsefn) {
@@ -679,7 +680,7 @@ var docElement            = doc.documentElement,
      * loads a CSS file from `uri`.
      *
      *     pre()
-     *       .asset('/css/style.css')
+     *       .css('/css/style.css')
      */
 
     css: function (uri, fn) {

@@ -202,12 +202,15 @@ pre()
 ### if()
 > `if(condition, fn)`
 
-runs `fn` if `condition` is met.
+runs `fn` if `condition` is met. The instance of `Pre` will be passed
+onto the function for convenience.
 
+```js
 Pre()
   .if(navigator.userAgent.match(/iOS/), function (Pre) {
     Pre.js('...');
   })
+```
 
 ### css()
 > `css(uri)`
@@ -216,7 +219,7 @@ loads a CSS file from `uri`.
 
 ```js
 pre()
-  .asset('/css/style.css')
+  .css('/css/style.css')
 ```
 
 ### add()
