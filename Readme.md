@@ -1,3 +1,12 @@
+> :raised_hands: Thanks for the support! This package is no longer maintained. For your async JS/CSS loading needs, I suggest looking at one of the following alternatives:
+>
+> - [scriptjs](http://yarn.pm/scriptjs)
+> - [loadjs](http://yarn.pm/loadjs)
+>
+> &mdash; Rico (@rstacruz)
+
+----
+
 pre.js
 ======
 
